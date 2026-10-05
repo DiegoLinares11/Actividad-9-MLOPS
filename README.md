@@ -44,11 +44,13 @@ act9-demo
 
 En Linux o macOS solo cambia la activación: `source .venv/bin/activate`.
 
-Con **conda** (trae GNU make, así que en Windows también funciona el Makefile):
+Con **conda** (trae GNU make, así que en Windows también funciona el Makefile), desde la carpeta
+del repositorio, porque `make` busca el `Makefile` en la carpeta actual:
 
 ```bash
 conda env create -f environment.yml
 conda activate act9-mlops
+make clean
 make pipeline
 ```
 
@@ -162,6 +164,16 @@ Lo que comprobamos en Windows con GNU Make 4.4.1 (instalado con conda):
 | `make pipeline` otra vez | `Nothing to be done for 'pipeline'` |
 | El modelo es más nuevo que las métricas | Solo repitió `act9-evaluar` y `act9-predecir` |
 | `make pipeline UMBRAL=0.90` | `act9-evaluar` devolvió 1, make se detuvo, borró `metricas.json` (`.DELETE_ON_ERROR`) y no corrió la predicción |
+
+### Capturas
+
+`make clean` y `make pipeline` en *Anaconda Prompt*, con el ambiente `act9-mlops`. Antes de la
+salida de cada etapa, make imprime la línea que ejecuta: cada receta es solo una llamada a un
+entry point.
+
+![make pipeline: datos y entrenamiento](capturas/01-make-pipeline-datos-entrenar.png)
+
+![make pipeline: evaluación y predicción](capturas/02-make-pipeline-evaluar-predecir.png)
 
 La variable `RUN` antepone el gestor de paquetes a cada comando, así que el mismo Makefile sirve
 para todos:

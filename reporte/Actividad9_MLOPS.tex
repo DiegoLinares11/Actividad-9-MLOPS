@@ -608,6 +608,33 @@ fallida dejaría un \texttt{metricas.json} con fecha nueva y la siguiente corrid
 hay nada que hacer. También declaramos \texttt{.PHONY} para los objetivos que no son archivos
 (\texttt{datos}, \texttt{test}, \texttt{clean}, \ldots), algo que el tutorial no muestra.
 
+\subsection{Capturas: make pipeline en Windows}
+
+Corrimos el pipeline desde \emph{Anaconda Prompt}, con el ambiente \texttt{act9-mlops} activado. La
+primera vez lo intentamos desde la carpeta de usuario y make respondió \texttt{No rule to make
+target 'pipeline'}, porque busca el \texttt{Makefile} en la carpeta actual. Ya dentro de la carpeta
+del repositorio, corrimos \texttt{make clean} y luego \texttt{make pipeline}. Antes de la salida de
+cada etapa, make imprime la línea que va a ejecutar, y ahí se ve que cada receta es solo una
+llamada a un entry point con sus argumentos. \texttt{act9-datos} limpió las 151 filas y dejó 144
+partidos, y \texttt{act9-entrenar} descubrió las cuatro familias del grupo
+\texttt{act9\_pipeline.modelos} y eligió SVC, con un \texttt{f1\_macro} de 0.652 en validación
+cruzada:
+
+\begin{center}
+\includegraphics[width=\textwidth]{01-make-pipeline-datos-entrenar.png}
+\end{center}
+
+\texttt{act9-evaluar} pasó la compuerta (\texttt{f1\_macro} de 0.604 contra un umbral de 0.50), así
+que make siguió con \texttt{act9-predecir}, que acertó 19 de los 29 partidos de prueba (segunda
+captura). Son los mismos números que dio el pipeline con uv, con Poetry y en GitHub Actions.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{02-make-pipeline-evaluar-predecir.png}
+\end{figure}
+
+\subsection{GitHub Actions}
+
 El workflow de GitHub Actions tiene dos jobs, uno con pip y otro con uv, y ninguno repite comandos
 del pipeline:
 
@@ -650,9 +677,10 @@ etapa, el Makefile cuándo correrla y GitHub Actions dónde. Cada capa queda cor
 misma orden (\texttt{make pipeline}) sirve en Windows, en Linux y en CI.
 
 \item \textbf{En nuestra opinión, lo que más enseñó fue lo que falló.} Los comandos no se
-encontraron al no activar el ambiente, Poetry reemplazó los ejecutables de pip en el mismo
-\texttt{.venv}, y el notebook volvió a arrancar con el Python global como en el Taller 2. En los tres
-casos el código estaba bien y el problema era el ambiente. Por eso \texttt{act9 info} imprime el
+encontraron al no activar el ambiente, make no encontró el \texttt{Makefile} al correrlo desde otra
+carpeta, Poetry reemplazó los ejecutables de pip en el mismo \texttt{.venv}, y el notebook volvió a
+arrancar con el Python global como en el Taller 2. En los cuatro casos el código estaba bien y el
+problema era el ambiente. Por eso \texttt{act9 info} imprime el
 intérprete, el gestor y la ruta de cada comando.
 \end{enumerate}
 

@@ -4173,7 +4173,7 @@ a.param-doc-link::before {
             score_func: callable, default=f_classif<br><br>Function taking two arrays X and y, and returning a pair of arrays<br>(scores, pvalues) or a single array with scores.<br>Default is f_classif (see below &quot;See Also&quot;). The default function only<br>works with classification tasks.<br><br>.. versionadded:: 0.18</span>
         </a>
     </td>
-            <td class="value">&lt;function f_c...00255A6AFCC20&gt;</td>
+            <td class="value">&lt;function f_c...002DAFD605440&gt;</td>
         </tr>
     
                   </tbody>
@@ -5344,10 +5344,10 @@ function copyFeatureNamesToClipboard(element) {
     if (!wasOpen) detailsElem.open = false;
     const rows = content.split('\n').map(row => `    "${row}"`);
     const formattedText = `[\n${rows.join(',\n')},\n]`;
-    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalHTML = element.innerHTML.replace('âœ”', '');
     const originalStyle = element.style;
     const copyMark = document.createElement('span');
-    copyMark.innerHTML = '✔';
+    copyMark.innerHTML = 'âœ”';
     copyMark.style.color = 'blue';
     copyMark.style.fontSize = '1em';
 
