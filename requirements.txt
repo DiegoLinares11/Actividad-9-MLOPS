@@ -1,0 +1,11 @@
+scikit-learn>=1.3
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+joblib>=1.3
+# Para el notebook:
+jupyter
+matplotlib
+# Para las pruebas y para construir el paquete:
+pytest>=7
+build

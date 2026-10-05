@@ -1,0 +1,24 @@
+# Ambiente de conda para la Actividad 9.
+#   conda env create -f environment.yml
+#   conda activate act9-mlops
+#   make pipeline
+name: act9-mlops
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - scikit-learn>=1.3
+  - pandas>=2.0
+  - numpy>=1.24
+  - scipy>=1.10
+  - joblib>=1.3
+  - pytest>=7
+  # GNU make desde conda-forge: así el Makefile corre en Windows sin
+  # instalar nada en el sistema.
+  - make
+  - pip
+  - pip:
+      # pip instala el paquete y crea los ejecutables de sus entry points
+      # dentro del ambiente (Scripts\ en Windows, bin/ en Linux).
+      - -e .

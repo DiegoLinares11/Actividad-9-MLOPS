@@ -1,0 +1,48 @@
+# CI de la Actividad 9: el workflow no repite los comandos del pipeline, solo
+# llama a los objetivos del Makefile, que a su vez llaman a los entry points.
+#   GitHub Actions -> make <objetivo> -> act9-<etapa> -> función de Python
+name: Pipeline con entry points
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pip:
+    name: pip + make
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar (crea los comandos act9-*)
+        run: make install-dev
+      - name: Entry points registrados
+        run: make info
+      - name: Pruebas
+        run: make test
+      - name: Pipeline (datos -> entrenar -> evaluar -> predecir)
+        run: make pipeline UMBRAL=0.50
+      - name: Instalar el plugin externo y listar las familias
+        run: |
+          make plugin-knn
+          make modelos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: modelo-y-metricas
+          path: |
+            modelos/
+            reportes/
+
+  uv:
+    name: uv + make
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - name: Pipeline con uv run (uv crea el ambiente solo)
+        run: make pipeline RUN="uv run"

@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+.pytest_cache/
+# dist/ se sube a propósito: el wheel trae el entry_points.txt que se analiza en el reporte.
+
+# Ambientes virtuales
+.venv/
+.venv-*/
+venv/
+env/
+
+# Archivos que generan las etapas del pipeline (make clean los borra)
+datos/procesados/
+modelos/
+reportes/
+
+# Se generan al probar el proyecto con uv y Poetry; la fuente de verdad de las
+# dependencias es pyproject.toml.
+uv.lock
+poetry.lock
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editores y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# LaTeX (auxiliares de compilación)
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz

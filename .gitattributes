@@ -1,0 +1,3 @@
+* text=auto
+# Las recetas del Makefile deben conservar sus finales de linea LF
+Makefile text eol=lf
