@@ -175,7 +175,7 @@ make pipeline RUN="conda run -n act9-mlops"
 
 El workflow [`.github/workflows/pipeline.yml`](.github/workflows/pipeline.yml) solo llama a
 objetivos del Makefile (`make install-dev`, `make test`, `make pipeline`, ...), con un job para
-pip y otro para uv.
+pip y otro para uv. Los dos jobs pasaron en Ubuntu, incluida la prueba que exige el 0.619 de la Actividad 3.
 
 ---
 
@@ -197,7 +197,7 @@ El pipeline dio exactamente lo mismo con los cuatro gestores de paquetes:
 | Gestor | Ambiente | Python | Ejecutables creados | `make pipeline` |
 |---|---|---|---|---|
 | venv + pip | `.venv` | 3.14.2 | `act9-*.exe` (lanzador de pip, 108 KB) | 0.652 → 0.655 / 0.604 |
-| conda (+ pip dentro) | `act9-mlops` | 3.12 | `act9-*.exe` | igual |
+| conda (+ pip dentro) | `act9-mlops` | 3.12.14 | `act9-*.exe` | igual |
 | uv (`uv run`, `uvx`) | `.venv-uv` / temporal | 3.14.2 | `act9-*.exe` (lanzador de uv, 47 KB) | igual |
 | Poetry 2.5 (`poetry run`) | caché de Poetry | 3.14.2 | `act9-*` + `act9-*.cmd` | igual |
 
